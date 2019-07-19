@@ -44,6 +44,7 @@ function Tagify(input, settings) {
   this.listeners = {};
   this.DOM = {}; // Store all relevant DOM elements in an Object
 
+  this.$dropdownRootElement = this.settings.dropdown.rootElement ? this.settings.dropdown.rootElement : document.body;
   this.extend(this, new this.EventDispatcher(this));
   this.build(input);
   this.loadOriginalValues();
@@ -224,6 +225,8 @@ Tagify.prototype = {
     if (o2) copy(o, o2);
 
     function isObject(obj) {
+      // Don't try and merge DOM elements
+      if (obj instanceof Element) return false;
       var type = Object.prototype.toString.call(obj).split(' ')[1].slice(0, -1);
       return obj === Object(obj) && type != 'Array' && type != 'Function' && type != 'RegExp' && type != 'HTMLUnknownElement';
     }
@@ -1156,10 +1159,10 @@ Tagify.prototype = {
       this.trigger("dropdown:show", this.DOM.dropdown); // if the dropdown has yet to be appended to the document,
       // append the dropdown to the body element & handle events
 
-      if (!document.body.contains(this.DOM.dropdown)) {
+      if (!this.dropdownRoot.contains(this.DOM.dropdown)) {
         if (!isManual) {
           this.dropdown.position.call(this);
-          document.body.appendChild(this.DOM.dropdown);
+          this.dropdownRoot.appendChild(this.DOM.dropdown);
           this.events.binding.call(this, false); // unbind the main events
         }
 
@@ -1171,7 +1174,7 @@ Tagify.prototype = {
           scope = _this$DOM.scope,
           dropdown = _this$DOM.dropdown,
           isManual = this.settings.dropdown.position == 'manual' && !force;
-      if (!dropdown || !document.body.contains(dropdown) || isManual) return;
+      if (!dropdown || !this.dropdownRoot.contains(dropdown) || isManual) return;
       window.removeEventListener('resize', this.dropdown.position);
       this.dropdown.events.binding.call(this, false); // unbind all events
 

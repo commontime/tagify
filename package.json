@@ -1,5 +1,5 @@
 {
-    "name": "@yaireo/tagify",
+    "name": "@commontimeltd/tagify",
     "version": "2.23.0",
     "homepage": "https://github.com/yairEO/tagify",
     "description": "Convert an input field into a Tags element. Easy, customizable, with good performance and small code footprint.",
