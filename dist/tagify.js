@@ -1,5 +1,5 @@
 /**
- * Tagify (v 2.23.0)- tags input component
+ * Tagify (v 2.23.1)- tags input component
  * By Yair Even-Or
  * Don't sell this code. (c)
  * https://github.com/yairEO/tagify
@@ -1159,10 +1159,10 @@ Tagify.prototype = {
       this.trigger("dropdown:show", this.DOM.dropdown); // if the dropdown has yet to be appended to the document,
       // append the dropdown to the body element & handle events
 
-      if (!this.dropdownRoot.contains(this.DOM.dropdown)) {
+      if (!this.$dropdownRootElement.contains(this.DOM.dropdown)) {
         if (!isManual) {
           this.dropdown.position.call(this);
-          this.dropdownRoot.appendChild(this.DOM.dropdown);
+          this.$dropdownRootElement.appendChild(this.DOM.dropdown);
           this.events.binding.call(this, false); // unbind the main events
         }
 
@@ -1174,7 +1174,7 @@ Tagify.prototype = {
           scope = _this$DOM.scope,
           dropdown = _this$DOM.dropdown,
           isManual = this.settings.dropdown.position == 'manual' && !force;
-      if (!dropdown || !this.dropdownRoot.contains(dropdown) || isManual) return;
+      if (!dropdown || !this.$dropdownRootElement.contains(dropdown) || isManual) return;
       window.removeEventListener('resize', this.dropdown.position);
       this.dropdown.events.binding.call(this, false); // unbind all events
 

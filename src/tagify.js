@@ -1186,10 +1186,10 @@ Tagify.prototype = {
 
             // if the dropdown has yet to be appended to the document,
             // append the dropdown to the body element & handle events
-            if( !this.dropdownRoot.contains(this.DOM.dropdown) ){
+            if( !this.$dropdownRootElement.contains(this.DOM.dropdown) ){
                 if( !isManual ){
                     this.dropdown.position.call(this);
-                    this.dropdownRoot.appendChild(this.DOM.dropdown);
+                    this.$dropdownRootElement.appendChild(this.DOM.dropdown);
                     this.events.binding.call(this, false); // unbind the main events
                 }
 
@@ -1201,7 +1201,7 @@ Tagify.prototype = {
             var {scope, dropdown} = this.DOM,
                 isManual = this.settings.dropdown.position == 'manual' && !force;
 
-            if( !dropdown || !this.dropdownRoot.contains(dropdown) || isManual ) return;
+            if( !dropdown || !this.$dropdownRootElement.contains(dropdown) || isManual ) return;
 
             window.removeEventListener('resize', this.dropdown.position)
 
