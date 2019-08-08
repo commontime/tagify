@@ -1320,9 +1320,9 @@ Tagify.prototype = {
                     var value,
                         listItemElm;
 
-                    if( e.button != 0 || e.target == this.DOM.dropdown ) return; // allow only mouse left-clicks
+                    if( e.button != 0 || e.path[0] == this.DOM.dropdown ) return; // allow only mouse left-clicks
 
-                    listItemElm = e.target.closest(".tagify__dropdown__item");
+                    listItemElm = e.path[0];
 
                     if( listItemElm ){
                         value = this.suggestedListItems[this.getNodeIndex(listItemElm)] || this.input.value;
