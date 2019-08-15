@@ -1,5 +1,5 @@
 /**
- * Tagify (v 2.23.2)- tags input component
+ * Tagify (v 2.23.3)- tags input component
  * By Yair Even-Or
  * Don't sell this code. (c)
  * https://github.com/yairEO/tagify
@@ -61,13 +61,16 @@ Tagify.prototype = {
     exceed: "number of tags exceeded",
     pattern: "pattern mismatch",
     duplicate: "already exists",
-    notAllowed: "not allowed"
+    notAllowed: "not allowed",
+    maxChars: "max number of characters exceeded"
   },
   DEFAULTS: {
     delimiters: ",",
     // [RegEx] split tags by any of these delimiters ("null" to cancel) Example: ",| |."
     pattern: null,
     // RegEx pattern to validate input by. Ex: /[1-9]/
+    maxChars: Infinity,
+    // Number of characters allowed per tag
     maxTags: Infinity,
     // Maximum number of tags
     callbacks: {},
@@ -756,7 +759,7 @@ Tagify.prototype = {
 
     if (!value) result = this.TEXTS.empty; // check if pattern should be used and if so, use it to test the value
     else if (this.settings.pattern && !this.settings.pattern.test(value)) result = this.TEXTS.pattern; // if duplicates are not allowed and there is a duplicate
-      else if (!this.settings.duplicates && this.isTagDuplicate(value) !== -1) result = this.TEXTS.duplicate;else if (this.isTagBlacklisted(value) || this.settings.enforceWhitelist && !this.isTagWhitelisted(value)) result = this.TEXTS.notAllowed;
+      else if (!this.settings.duplicates && this.isTagDuplicate(value) !== -1) result = this.TEXTS.duplicate;else if (this.isTagBlacklisted(value) || this.settings.enforceWhitelist && !this.isTagWhitelisted(value)) result = this.TEXTS.notAllowed;else if (this.settings.maxChars && value.length > this.settings.maxChars) result = this.TEXTS.maxChars;
     return result;
   },
   maxTagsReached: function maxTagsReached() {

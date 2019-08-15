@@ -32,12 +32,14 @@ Tagify.prototype = {
         exceed     : "number of tags exceeded",
         pattern    : "pattern mismatch",
         duplicate  : "already exists",
-        notAllowed : "not allowed"
+        notAllowed : "not allowed",
+        maxChars   : "max number of characters exceeded"
     },
 
     DEFAULTS : {
         delimiters          : ",",            // [RegEx] split tags by any of these delimiters ("null" to cancel) Example: ",| |."
         pattern             : null,           // RegEx pattern to validate input by. Ex: /[1-9]/
+        maxChars            : Infinity,       // Number of characters allowed per tag
         maxTags             : Infinity,       // Maximum number of tags
         callbacks           : {},             // Exposed callbacks object to be triggered on certain events
         addTagOnBlur        : true,           // Flag - automatically adds the text which was inputed as a tag when blur event happens
@@ -778,6 +780,9 @@ Tagify.prototype = {
 
         else if( this.isTagBlacklisted(value) ||(this.settings.enforceWhitelist && !this.isTagWhitelisted(value)) )
             result = this.TEXTS.notAllowed;
+
+        else if( this.settings.maxChars && value.length > this.settings.maxChars)
+            result = this.TEXTS.maxChars;
 
         return result;
     },
